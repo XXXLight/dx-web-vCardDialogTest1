@@ -1,17 +1,47 @@
-import React from 'react';
+import React, { Fragment, Component } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import "./index.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+class SecurityItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      enCodeData: props.enCodeDataOut,
+      perLevel:props.perLevelOut
+    }
+  }
+
+  render() {
+
+    return (
+      <Fragment>
+        <div>
+          {this.state.enCodeData}
+          <button onClick={this.handleBtnClick}>按钮</button>
+        </div>
+      </Fragment>
+    );
+  }
+  // 通过React绑定监听的onClick事件类型绑定的方法内的setState方法都是异步的
+  getDecodeData=(personLevel)=>{
+      if(!this.state.perLevel){     // 权限阈值小于3
+        return this.state.enCodeData
+      }
+      else {    //  权限足够，显示完整字段
+        var res = "肖小亮";
+        return res
+      }
+
+  }
+  handleBtnClick = () => {
+    this.setState({
+      enCodeData: this.getDecodeData(this.state.perLevel)
+    });
+  }
+
+}
+
+const element = document.getElementById('root');
+
+ReactDOM.render(<SecurityItem enCodeDataOut="肖**" perLevelOut={true} />, element);
