@@ -34,14 +34,13 @@ class SecurityItem extends Component {
       }
 
   }
-  handleBtnClick = () => {
+  handleBtnClick =async () => {
     this.setState({
       enCodeData: this.getDecodeData(this.state.perLevel)
     });
   }
 
 }
+const element=<SecurityItem enCodeDataOut="肖**" perLevelOut={true} onClick={()=>{}}/>;
 
-const element = document.getElementById('root');
-
-ReactDOM.render(<SecurityItem enCodeDataOut="肖**" perLevelOut={true} />, element);
+ReactDOM.render(element,document.getElementById('root'));
