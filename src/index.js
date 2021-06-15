@@ -1,46 +1,38 @@
-import React, { Fragment, Component } from 'react';
+import React, {  Component } from 'react';
 import ReactDOM from 'react-dom';
+import SecurityItem from './SecurityItem'
 import "./index.css";
 
 
-class SecurityItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      enCodeData: props.enCodeDataOut,
-      perLevel:props.perLevelOut
+
+class VCard extends Component {//组件名首字母必须大写，要不然会被认为是html标签
+    constructor(props){
+        super(props);//必须是分号
+        this.state={
+            enCodeData:"肖**",
+            personAccess:true
+        }
     }
-  }
-
-  render() {
-
-    return (
-      <Fragment>
-        <div>
-          {this.state.enCodeData}
-          <button onClick={this.handleBtnClick}>按钮</button>
-        </div>
-      </Fragment>
-    );
-  }
-  // 通过React绑定监听的onClick事件类型绑定的方法内的setState方法都是异步的
-  getDecodeData=(personLevel)=>{
-      if(!this.state.perLevel){     // 权限阈值小于3
-        return this.state.enCodeData
-      }
-      else {    //  权限足够，显示完整字段
-        var res = "肖小亮";
-        return res
-      }
-
-  }
-  handleBtnClick =async () => {
-    this.setState({
-      enCodeData: this.getDecodeData(this.state.perLevel)
-    });
-  }
-
+    render() { 
+        return ( 
+            <div>
+                <SecurityItem 
+                enCodeData={this.state.enCodeData}
+                personAccess={this.state.personAccess} 
+                clickNtn={this.handleBtnClick}
+                />
+            </div>
+         );
+    }
+    handleBtnClick =async () => {
+        if(this.state.personAccess){     // 权限阈值小于3
+            this.setState({
+                enCodeData:"肖小亮"
+            })
+        }
+    }
 }
-const element=<SecurityItem enCodeDataOut="肖**" perLevelOut={true} onClick={()=>{}}/>;
+ 
 
+const element=<VCard />;
 ReactDOM.render(element,document.getElementById('root'));
